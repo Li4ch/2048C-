@@ -72,6 +72,7 @@ namespace Game_2048
         }
         public void move_Box_Down() //реагування на зміщення
         {
+            plas_Down_Buttn();
             for (int y = 3; y > 0; y--)
             {
                 for (int x = 0; x < display_x; x++)
@@ -149,6 +150,7 @@ namespace Game_2048
         }
         public void move_Box_Up() //реагування на зміщення
         {
+            plas_Up_Buttn();
             for (int y = 0; y  < display_y; y++)
             {
                 for (int x = 0; x < display_x; x++)
@@ -230,17 +232,33 @@ namespace Game_2048
         }
         private void plas_Down_Buttn()
         {
-            for (int y = 0; y < display_y; y++)
+            for (int x = 0; x < display_x; x++)
             {
-                for (int x = 0; x < display_x; x++)
+                for (int y = 3; y > 0; y--) 
                 {
-                    if (game_Score[x, y] != 0)
+                    if (game_Score[x, y] == 0)
                     {
-                        if (game_Score[x, y] == game_Score[x + 1, y])
-                        {
-                            game_Score[x, y] *= 2;
-                            game_Score[x + 1, y] = 0;
-                        }
+                        continue;
+                    }
+                    if (y > 0 && game_Score[x, y] == game_Score[x, y - 1])
+                    {
+                        game_Score[x, y] += game_Score[x, y - 1];
+                        game_Score[x, y - 1] = 0;
+                        free_Box++;
+                        continue;
+                    }
+                    if (y > 1 && game_Score[x, y] == game_Score[x, y - 2])
+                    {
+                        game_Score[x, y] += game_Score[x, y - 2];
+                        game_Score[x, y - 2] = 0;
+                        free_Box++;
+                        continue;
+                    }
+                    if (y == 0 && game_Score[x, y] == game_Score[x, y - 3])
+                    {
+                        game_Score[x, y] += game_Score[x, y - 3];
+                        game_Score[x, y - 3] = 0;
+                        free_Box++;
                     }
                 }
             }
@@ -251,13 +269,29 @@ namespace Game_2048
             {
                 for (int x = 0; x < display_x; x++)
                 {
-                    if (game_Score[x, y] != 0)
+                    if (game_Score[x, y] == 0)
                     {
-                        if (game_Score[x, y] == game_Score[x + 1, y])
-                        {
-                            game_Score[x, y] *= 2;
-                            game_Score[x + 1, y] = 0;
-                        }
+                        continue;
+                    }
+                    if (y < 3 && game_Score[x, y] == game_Score[x , y + 1])
+                    {
+                        game_Score[x, y] += game_Score[x , y + 1];
+                        game_Score[x , y + 1] = 0;
+                        free_Box++;
+                        continue;
+                    }
+                    if (y < 2 && game_Score[x, y] == game_Score[x, y + 2])
+                    {
+                        game_Score[x, y] += game_Score[x , y + 2];
+                        game_Score[x , y + 2] = 0;
+                        free_Box++;
+                        continue;
+                    }
+                    if (y == 0 && game_Score[x, y] == game_Score[x , y + 3])
+                    {
+                        game_Score[x, y] += game_Score[x, y + 3];
+                        game_Score[x, y + 3] = 0;
+                        free_Box++;
                     }
                 }
             }
@@ -272,10 +306,24 @@ namespace Game_2048
                     {
                         continue;
                     }
-                    if (x > 1 && game_Score[x, y] == game_Score[x - 1, y])
+                    if (x > 0 && game_Score[x, y] == game_Score[x - 1, y])
                     {
                         game_Score[x, y] += game_Score[x - 1, y];
                         game_Score[x - 1, y] = 0;
+                        free_Box++;
+                        continue;
+                    }
+                    if (x > 1 && game_Score[x, y] == game_Score[x - 2, y])
+                    {
+                        game_Score[x, y] += game_Score[x - 2, y];
+                        game_Score[x - 2, y] = 0;
+                        free_Box++;
+                        continue;
+                    }
+                    if (x == 3 && game_Score[x, y] == game_Score[x - 3, y])
+                    {
+                        game_Score[x, y] += game_Score[x + 3, y];
+                        game_Score[x - 3, y] = 0;
                         free_Box++;
                     }
                 }

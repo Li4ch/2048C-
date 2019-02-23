@@ -16,9 +16,7 @@ namespace Game_2048
             while(true)
             {
                 t.Drow_Display();
-                t.changeGD();
-               
-               
+                t.changeGD();               
             }
           
 
